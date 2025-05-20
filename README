@@ -36,10 +36,10 @@ EventSource providers should automatically match.
 
 If you want to use UIforETW then you should download the latest
 etwpackage.zip from the releases page at:
-https://github.com/google/UIforETW/releases
+https://github.com/randomascii/UIforETW/releases
 
 If you want to build or modify UIforETW then you should clone the repo
-from https://github.com/google/UIforETW.git and then build
+from https://github.com/randomascii/UIforETW.git and then build
 UIforETW\UIforETW.sln.
 
 Pull requests are welcomed. For information on contributing see the
