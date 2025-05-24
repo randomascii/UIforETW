@@ -117,6 +117,8 @@ xcopy %UIforETW%third_party\symsrv.dll %destdir%\bin /y
 
 @rem Sign the important (requiring elevation) binaries
 set bindir=%~dp0etwpackage\bin
+@echo Make sure the signing token is inserted and retrieve the Sectigo Code Signing certificate from the password vault
+@pause
 signtool sign /a /d "UIforETW" /du "https://github.com/randomascii/UIforETW/releases" /n "Bruce Dawson" /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 %bindir%\UIforETW.exe %bindir%\EventEmitter.exe %bindir%\EventEmitter64.exe %bindir%\flame_graph.exe %bindir%\RetrieveSymbols.exe %bindir%\DelayedCreateProcess.exe %bindir%\DummyChrome.dll %bindir%\ETWProviders.dll %bindir%\ETWProviders64.dll %bindir%\ETWProvidersARM64.dll
 @if not %errorlevel% equ 0 goto signing_failure
 
@@ -210,8 +212,11 @@ call python3 rename_to_version.py UIforETW\Version.h
 cd etwsymserver
 @rem Upload to the randomascii-symbols public symbol server.
 @echo Final step - ready to upload the symbols?
+@echo Make sure the gloud CLI is installed and you are authenticated with gcloud auth login
 @pause
-call python3 c:\src\depot_tools\gsutil.py cp -Z -R  . gs://randomascii-symbols
+@rem Recursively upload the symbol server directory structure, compressing the files to save
+@rem both network bandwidth (upload and download) and storage space.
+gcloud storage cp --recursive --gzip-local-all . gs://randomascii-symbols
 cd ..
 @echo on
 
