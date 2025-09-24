@@ -28,7 +28,7 @@ mkdir %destdir%\third_party\wpt10
 xcopy "%wpt10%%wptredistmsi1%" %destdir%\third_party\wpt10
 xcopy "%wpt10%%wptredistmsi2%" %destdir%\third_party\wpt10
 @if errorlevel 1 goto copyfailure
-xcopy "%wpt10%Licenses\10.0.22000.0\sdk_license.rtf" %destdir%\third_party\wpt10
+xcopy "%wpt10%Licenses\10.0.26100.0\sdk_license.rtf" %destdir%\third_party\wpt10
 @if errorlevel 1 goto copyfailure
 ren %destdir%\third_party\wpt10\sdk_license.rtf LICENSE.rtf
 
@@ -85,8 +85,7 @@ if exist x64\Release rmdir x64\Release /s/q
 devenv /rebuild "release|x64" UIforETWStatic.sln
 @if ERRORLEVEL 1 goto BuildFailure
 @rem Clean up after building the static version.
-rmdir Release /s/q
-rmdir x64\Release /s/q
+rmdir UIforETWStatic\x64\Release /s/q
 del UIforETWStatic.vcxproj
 del UIforETWStatic.sln
 
