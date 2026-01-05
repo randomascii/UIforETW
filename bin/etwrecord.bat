@@ -38,12 +38,8 @@
 
 @rem Generate a file name based on the current date and time and put it in
 @rem etwtracedir. This is compatible with UIforETW which looks for traces there.
-@rem Note: this probably fails in some locales. Sorry.
-@for /F "tokens=2-4 delims=/- " %%A in ('date/T') do @set datevar=%%C-%%A-%%B
-@for /F "tokens=1-3 delims=:-. " %%A in ('echo %time%') do @set timevar=%%A-%%B-%%C&set hour=%%A
-@rem Make sure that morning hours such as 9:00 are handled as 09 rather than 9
-@if %hour% LSS 10 set timevar=0%timevar%
-@set FileName=%etwtracedir%\%datevar%_%timevar%_%username%
+@for /f "delims=" %%A in ('powershell get-date -format "{yyyy-MM-dd_HH-mm-ss}"') do @set datetime=%%A
+@set FileName=%etwtracedir%\%datetime%_%username%
 
 @if "%1" == "" goto NoFileSpecified
 @set ext=%~x1
